@@ -7,7 +7,7 @@
     >
       <a
         href="javascript:void(0)"
-        class="closebtn absolute text-white text-xl hover:text-myYellow hover:text-3xl"
+        class=" right-0 mr-3 top-0 ml-20 absolute text-white text-xl hover:text-myYellow hover:text-3xl"
         @click="closeNav"
         >&times;</a
       >
@@ -21,9 +21,10 @@
       >
         MOVIE STORE
       </p>
-      <router-link to="/">
+      <router-link to="/" @click="setActiveTab('Latest')">
         <a
-          class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
+          class="block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
+          v-bind:class="{ 'text-gray-200': activeTab == 'latest' }"
         >
           Latest
         </a>
@@ -65,12 +66,18 @@
             Sign In
           </button>
         </div>
+        <p
+          class=" text-sm font-semibold mt-10 cursor-pointer"
+          @click="closeNav"
+        >
+          Close
+        </p>
       </div>
     </div>
 
-    <div id="main" v-if="!isOpen">
+    <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out">
       <button
-        class="openbtn rounded-lg text-xl bg-black cursor-pointer"
+        class="py-3 px-3 rounded-lg text-xl bg-black cursor-pointer"
         @click="openNav"
         v-bind:class="{
           'text-myYellow': isMenuHovered,
@@ -98,7 +105,8 @@ export default {
   data() {
     return {
       isOpen: false,
-      isMenuHovered: false
+      isMenuHovered: false,
+      activeTab: "latest"
     };
   },
   methods: {
@@ -108,6 +116,16 @@ export default {
     closeNav: function() {
       this.isOpen = false;
       this.isMenuHovered = false;
+    },
+    setActiveTab: function(val) {
+      this.activeTab = val;
+    },
+    getTextColor: function(tab) {
+      var styleClass = "text-gray-800";
+      if (tab == this.activeTab) {
+        styleClass = "text-white";
+      }
+      return styleClass;
     }
   }
 };
@@ -140,18 +158,6 @@ export default {
 /* When you mouse over the navigation links, change their color */
 
 /* Position and style the close button (top right corner) */
-.sidebar .closebtn {
-  top: 0;
-  right: 25px;
-  margin-left: 50px;
-}
-
-/* The button used to open the sidebar */
-.openbtn {
-  color: white;
-  padding: 10px 15px;
-  border: none;
-}
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {

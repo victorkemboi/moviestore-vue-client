@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center bg-gray-300 p-10 rounded-lg shadow-lg hover:bg-black cursor-pointer"
+    class="flex flex-col items-center bg-gray-300 p-10 rounded-lg shadow-lg hover:bg-pink-500 cursor-pointer"
     @mouseover="isCardHovered = true"
     @mouseleave="isCardHovered = false"
   >
@@ -13,7 +13,7 @@
       class=" font-semibold text-lg mt-2"
       v-bind:class="{
         'text-myYellow': isCardHovered,
-        'text-black': !isCardHovered
+        'text-pink-500': !isCardHovered
       }"
     >
       {{ movie.title }}
@@ -21,7 +21,7 @@
     <p
       class=" text-center font-semibold mt-4 "
       v-bind:class="{
-        'text-pink-500': isCardHovered,
+        'text-white': isCardHovered,
         'text-black': !isCardHovered
       }"
     >
