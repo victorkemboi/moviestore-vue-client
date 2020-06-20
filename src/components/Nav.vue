@@ -73,6 +73,10 @@ export default {
   name: "Nav",
   props: {
     msg: String
+  },
+  methods: {
+    openNav: function() {},
+    closeNav: function() {}
   }
 };
 </script>

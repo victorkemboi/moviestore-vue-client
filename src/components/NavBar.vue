@@ -4,7 +4,7 @@
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
-        <img class="h-8" src="/img/logo-inverted.svg" alt="Workcation" />
+        <img class="h-8" src="@/assets/logo.png" alt="Movie Store" />
       </div>
       <div class="sm:hidden">
         <button

@@ -1,5 +1,5 @@
 <template>
-  <div class="home bg-myBlue">
+  <div class="home bg-myBlue p-10">
     <!--add  components-->
     <MovieList v-bind:movies="newMovies" />
   </div>
