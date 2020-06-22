@@ -7,7 +7,6 @@ import store from "./store.js";
 import { apolloProvider } from "./graphql/apollo";
 Vue.config.productionTip = false;
 
-console.log("Initialize Vue.");
 new Vue({
   router,
   store,

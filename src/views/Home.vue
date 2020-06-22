@@ -1,51 +1,47 @@
 <template>
-  <div class="home bg-myBlue p-10 max-w-full">
-    <!--add  components-->
-    <WelcomeMessage />
-    <div class="flex flex-col mt-screenH overflow-hidden ">
-      <h1
-        class=" w-full mb-4 text-2xl text-right self-end font-medium text-myYellow"
-      >
-        Latest
+  <div class=" h-screen flex flex-col bg-myBlue landing">
+    <div class="flex w-auto h-auto">
+      <h1 class=" text-6xl font-light text-myYellow mt-40 ml-32">
+        Welcome,
       </h1>
-      <hr class=" w-full mb-3 text-pink-500" />
     </div>
-    <MovieList v-bind:movies="newMovies" />
+
+    <span class="w-full self-center">
+      <div class="icon">
+        <img src="@/assets/img/ic_arrow.svg" class=" w-10 hover: left-0" />
+      </div>
+    </span>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-//import NavBar from "@/components/NavBar.vue"
-//import SideNav from "@/components/SideNav.vue";
-import MovieList from "@/components/MovieList.vue";
-import { GET_RECENT_MOVIES_QUERY } from "@/graphql/movieQueries.js";
-import WelcomeMessage from "@/components/WelcomeMessage.vue";
 export default {
-  name: "Home",
-  components: {
-    MovieList,
-    WelcomeMessage
-  },
-  data() {
-    return {
-      movies: []
-    };
-  },
-  created: function() {
-    this.fetchNewMovies();
-  },
-  methods: {
-    async fetchNewMovies() {
-      this.$apollo.query({ query: GET_RECENT_MOVIES_QUERY }).then(response => {
-        this.$store.dispatch("updateNewMovies", response.data.movies);
-      });
-    }
-  },
-  computed: {
-    newMovies: function() {
-      return this.$store.state.newMovies;
-    }
-  }
+  name: "WelcomeMessage"
 };
 </script>
+
+<style>
+.landing {
+  background: url("../assets/img/il_landing.svg") no-repeat right 50%;
+  border-right: 4px solid transparent;
+}
+
+.welcome {
+  top: 25%;
+  left: 40%;
+}
+
+.icon {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .landing-il {
+    top: 40%;
+  }
+}
+</style>

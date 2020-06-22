@@ -26,21 +26,20 @@
           class="block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
           v-bind:class="{ 'text-gray-200': activeTab == 'latest' }"
         >
-          Latest
+          Home
         </a>
       </router-link>
-      <router-link to="/">
+      <router-link to="/latest">
         <a
-          href="#"
           class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
-          >Services</a
+          >Latest</a
         >
       </router-link>
       <router-link to="/">
         <a
           href="#"
           class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
-          >Clients</a
+          >About</a
         >
       </router-link>
       <router-link to="/">

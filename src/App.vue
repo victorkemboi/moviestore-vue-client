@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> |
+    <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>  -->
-    </div>
+    <SideBar />
+
     <router-view />
   </div>
 </template>
 
 <script>
+import SideBar from "@/components/SideBar.vue";
 export default {
-  name: "app"
+  name: "app",
+  components: {
+    SideBar
+  }
 };
 </script>
