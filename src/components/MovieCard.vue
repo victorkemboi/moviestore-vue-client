@@ -57,15 +57,13 @@ export default {
     aggregateCast: function() {
       var cast = "";
       this.movie.cast.forEach((actor, index) => {
-        console.log("Actor: ");
-        console.log(actor.name);
         if (index == 0) {
           cast = cast.concat(actor.name);
         } else {
           cast = cast.concat(", ", actor.name);
         }
       });
-      console.log(cast);
+
       return cast;
     }
   }

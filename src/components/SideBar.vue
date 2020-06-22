@@ -2,7 +2,7 @@
   <div class=" fixed flex shadow-xl">
     <div
       id="mySidebar"
-      class="sidebar flex flex-col "
+      class="sidebar flex flex-col text-gray-700 "
       v-bind:class="{ ' w-1/5': isOpen, 'w-0': !isOpen }"
     >
       <a
@@ -21,31 +21,32 @@
       >
         MOVIE STORE
       </p>
-      <router-link to="/" @click="setActiveTab('Latest')">
+      <router-link to="/" exact>
         <a
-          class="block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
-          v-bind:class="{ 'text-gray-200': activeTab == 'latest' }"
+          v-on:click="closeNav"
+          class=" block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
         >
           Home
         </a>
       </router-link>
-      <router-link to="/latest">
+      <router-link to="/latest" exact>
         <a
-          class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
+          v-on:click="closeNav"
+          class="block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
           >Latest</a
         >
       </router-link>
-      <router-link to="/">
+      <router-link to="/about" exact>
         <a
-          href="#"
-          class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
+          v-on:click="closeNav"
+          class="block py-1 md:py-3 pl-1 align-middle no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow"
           >About</a
         >
       </router-link>
-      <router-link to="/">
+      <router-link to="/contact" exact>
         <a
-          href="#"
-          class="block py-1 md:py-3 pl-1 align-middle text-gray-800 no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow mb-auto"
+          v-on:click="closeNav"
+          class="block py-1 md:py-3 pl-1 align-middle  no-underline hover:text-pink-500 border-b-2 border-gray-800 md:border-gray-900 hover:border-myYellow mb-auto"
           >Contact</a
         >
       </router-link>
@@ -67,7 +68,7 @@
         </div>
         <p
           class=" text-sm font-semibold mt-10 cursor-pointer"
-          @click="closeNav"
+          v-on:click="closeNav"
         >
           Close
         </p>
@@ -76,7 +77,7 @@
 
     <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out">
       <button
-        class="py-3 px-3 rounded-lg text-xl bg-black cursor-pointer"
+        class="py-3 px-3 rounded-lg text-xl bg-black cursor-pointer transition duration-500 ease-in-out"
         @click="openNav"
         v-bind:class="{
           'text-myYellow': isMenuHovered,
@@ -86,6 +87,7 @@
         @mouseleave="isMenuHovered = false"
       >
         <span
+          class="transition duration-500 ease-in-out"
           v-bind:class="{
             'text-pink-500': isMenuHovered,
             'text-white': !isMenuHovered
@@ -105,7 +107,7 @@ export default {
     return {
       isOpen: false,
       isMenuHovered: false,
-      activeTab: "latest"
+      activeTab: "home"
     };
   },
   methods: {
@@ -115,22 +117,15 @@ export default {
     closeNav: function() {
       this.isOpen = false;
       this.isMenuHovered = false;
-    },
-    setActiveTab: function(val) {
-      this.activeTab = val;
-    },
-    getTextColor: function(tab) {
-      var styleClass = "text-gray-800";
-      if (tab == this.activeTab) {
-        styleClass = "text-white";
-      }
-      return styleClass;
     }
   }
 };
 </script>
 
 <style>
+.active {
+  color: #edf2f7;
+}
 .sidebar {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
@@ -149,12 +144,12 @@ export default {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+
   display: block;
   transition: 0.3s;
 }
 
-/* When you mouse over the navigation links, change their color */
+/* When you mouse over the navigation links, change their color   color: #818181; */
 
 /* Position and style the close button (top right corner) */
 

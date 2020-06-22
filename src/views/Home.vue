@@ -1,22 +1,26 @@
 <template>
   <div class=" h-screen flex flex-col bg-myBlue landing">
-    <div class="flex w-auto h-auto">
-      <h1 class=" text-6xl font-light text-myYellow mt-40 ml-32">
-        Welcome,
-      </h1>
-    </div>
+    <h1 class=" text-6xl font-light text-myYellow mt-40 ml-32">
+      Welcome,
+    </h1>
 
-    <span class="w-full self-center">
+    <SearchBar class="  w-2/5 self-center search" />
+
+    <router-link to="/latest" exact>
       <div class="icon">
-        <img src="@/assets/img/ic_arrow.svg" class=" w-10 hover: left-0" />
+        <img src="@/assets/img/ic_arrow.svg" class=" h-5  hover: left-0" />
       </div>
-    </span>
+    </router-link>
   </div>
 </template>
 
 <script>
+import SearchBar from "@/components/SearchBar.vue";
 export default {
-  name: "WelcomeMessage"
+  name: "Home",
+  components: {
+    SearchBar
+  }
 };
 </script>
 
@@ -26,9 +30,9 @@ export default {
   border-right: 4px solid transparent;
 }
 
-.welcome {
-  top: 25%;
-  left: 40%;
+.search {
+  position: absolute;
+  top: 65%;
 }
 
 .icon {
