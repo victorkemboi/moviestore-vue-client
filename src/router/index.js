@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Latest from "../views/Latest.vue";
+import SearchPage from "../views/SearchPage.vue";
+import SignUp from "../views/customer/SignUp.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +12,16 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/search",
+    name: "SearchPage",
+    component: SearchPage
+  },
+  {
+    path: "/register",
+    name: "SignUp",
+    component: SignUp
   },
   {
     path: "/latest",

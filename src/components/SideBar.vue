@@ -66,8 +66,16 @@
             Sign In
           </button>
         </div>
+        <router-link to="/register" exact>
+          <p
+            class=" text-sm font-semibold mt-2 cursor-pointer transition duration-500 ease-in-out  hover:text-pink-500 hover:text-base"
+            v-on:click="closeNav"
+          >
+            Sign Up
+          </p>
+        </router-link>
         <p
-          class=" text-sm font-semibold mt-10 cursor-pointer"
+          class="text-xs font-semibold mt-10 cursor-pointer"
           v-on:click="closeNav"
         >
           Close
@@ -106,8 +114,7 @@ export default {
   data() {
     return {
       isOpen: false,
-      isMenuHovered: false,
-      activeTab: "home"
+      isMenuHovered: false
     };
   },
   methods: {

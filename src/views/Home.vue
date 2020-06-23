@@ -1,10 +1,10 @@
 <template>
   <div class=" h-screen flex flex-col bg-myBlue landing">
-    <h1 class=" text-6xl font-light text-myYellow mt-40 ml-32">
+    <h1 class=" text-6xl font-light text-white mt-40 ml-32">
       Welcome,
     </h1>
 
-    <SearchBar class="  w-2/5 self-center search" />
+    <SearchBar class="  w-2/5 self-center search" v-bind:isHome="true" />
 
     <router-link to="/latest" exact>
       <div class="icon">

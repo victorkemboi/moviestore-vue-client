@@ -37,6 +37,7 @@ const store = new Vuex.Store({
         username: ""
       }
     },
+    parsedSearch: "",
     myMovies: [movie],
     newMovies: [movie],
     cart: [purchase]
@@ -46,6 +47,7 @@ const store = new Vuex.Store({
     updateToken: (state, val) => (state.customer.token = val),
     updateCustomerId: (state, val) => (state.customer.customerId = val),
     updateUser: (state, val) => (state.customer.user = val),
+    parseSearch: (state, val) => (state.parsedSearch = val),
     updateNewMovies: (state, val) => (state.newMovies = val)
   },
   actions: {
@@ -53,6 +55,7 @@ const store = new Vuex.Store({
     updateToken: ({ commit }, val) => commit("updateToken", val),
     updateCustomerId: ({ commit }, val) => commit("updateCustomerId", val),
     updateUser: ({ commit }, val) => commit("updateUser", val),
+    parseSearch: ({ commit }, val) => commit("parseSearch", val),
     updateNewMovies: ({ commit }, val) => commit("updateNewMovies", val)
   }
 });

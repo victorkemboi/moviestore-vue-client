@@ -1,7 +1,7 @@
 <template>
-  <div class="home bg-myBlue p-10 ">
+  <div class=" bg-myBlue p-10 flex flex-col ">
     <!--add  components -->
-    <div class="flex flex-col  overflow-hidden ">
+    <div class="">
       <h1
         class=" w-full mt-16 mb-4 text-2xl text-right self-end font-medium text-myYellow"
       >
@@ -9,25 +9,28 @@
       </h1>
       <hr class=" w-full mb-3 text-pink-500" />
     </div>
+    <div v-if="loading === true" class=" bg-transparent self-center mt-3 mb-8">
+      <span class="text-green-500 opacity-75 top-1/2 my-0">
+        <i class="fas fa-circle-notch fa-spin fa-5x"></i>
+      </span>
+    </div>
     <MovieList v-bind:movies="newMovies" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-//import NavBar from "@/components/NavBar.vue"
-//import SideNav from "@/components/SideNav.vue";
 import MovieList from "@/components/MovieList.vue";
 import { GET_RECENT_MOVIES_QUERY } from "@/graphql/movieQueries.js";
 
 export default {
-  name: "Home",
+  name: "Latest",
   components: {
     MovieList
   },
   data() {
     return {
-      movies: []
+      movies: [],
+      loading: false
     };
   },
   created: function() {
@@ -35,7 +38,9 @@ export default {
   },
   methods: {
     async fetchNewMovies() {
+      this.loading = true;
       this.$apollo.query({ query: GET_RECENT_MOVIES_QUERY }).then(response => {
+        this.loading = false;
         this.$store.dispatch("updateNewMovies", response.data.movies);
       });
     }
