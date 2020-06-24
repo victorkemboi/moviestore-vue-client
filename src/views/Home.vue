@@ -1,7 +1,15 @@
 <template>
   <div class=" h-screen flex flex-col bg-myBlue landing">
-    <h1 class=" text-6xl font-light text-white mt-40 ml-32">
-      Welcome,
+    <h1
+      class=" text-6xl font-light text-white mt-40 ml-32 flex flex-row items-end"
+    >
+      Welcome<span v-if="loggedIn">,</span>
+      <p
+        v-if="loggedIn"
+        class=" text-3xl pb-3 hover:underline text-pink-400 hover:text-myYellow ml-4"
+      >
+        {{ username }}
+      </p>
     </h1>
 
     <SearchBar class="  w-2/5 self-center search" v-bind:isHome="true" />
@@ -20,6 +28,14 @@ export default {
   name: "Home",
   components: {
     SearchBar
+  },
+  computed: {
+    loggedIn: function() {
+      return this.$store.state.customer.loggedIn;
+    },
+    username: function() {
+      return this.$store.state.customer.user.username;
+    }
   }
 };
 </script>

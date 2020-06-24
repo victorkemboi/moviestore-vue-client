@@ -4,13 +4,14 @@ import Home from "../views/Home.vue";
 import Latest from "../views/Latest.vue";
 import SearchPage from "../views/SearchPage.vue";
 import SignUp from "../views/customer/SignUp.vue";
+import SignIn from "../views/customer/SignIn.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home
   },
   {
@@ -22,6 +23,11 @@ const routes = [
     path: "/register",
     name: "SignUp",
     component: SignUp
+  },
+  {
+    path: "/signin",
+    name: "SignIn",
+    component: SignIn
   },
   {
     path: "/latest",

@@ -12,9 +12,9 @@ const httpLink = new HttpLink({
 // Error Handling
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
-    graphQLErrors.map();
+    graphQLErrors.map(err => console.error("Err: ", err.message));
   }
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  if (networkError) console.error(`[Network error]: ${networkError}`);
 });
 
 // Create the apollo client

@@ -1,17 +1,17 @@
 <template>
-  <div class="flex bg-myBlue p-10 flex-col items-center h-full">
+  <div class="flex  p-10 flex-col items-center">
     <div class="relative w-3/5 mt-10">
       <h2 class=" text-2xl text-myYellow">Register below!</h2>
       <hr class=" w-full mt-3 mb-8" />
 
-      <form @submit.prevent="signup" class="flex flex-col">
+      <form @submit.prevent="" class="flex flex-col">
         <div class=" mb-3 ">
           <p class=" mb-1 text-base">Username</p>
           <input
             type="text"
             class="text-gray-800  rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
             v-model="username"
-            placeholder="Username"
+            placeholder="john_doe"
           />
         </div>
         <div class=" mb-3 ">
@@ -20,16 +20,16 @@
             type="text"
             class="text-gray-800  rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
             v-model="first_name"
-            placeholder="First name"
+            placeholder="John"
           />
         </div>
         <div class=" mb-3 ">
           <p class=" mb-1 text-base">Last name</p>
           <input
             type="text"
-            class=" text-xl text-gray-800 rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
+            class="text-gray-800 rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
             v-model="last_name"
-            placeholder="last_name"
+            placeholder="Doe"
           />
         </div>
         <div class="mb-3">
@@ -37,8 +37,8 @@
           <input
             type="phone"
             class=" rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
-            v-model="phonenumber"
-            placeholder="Phone no."
+            v-model="phone_number"
+            placeholder="07..."
           />
         </div>
 
@@ -48,7 +48,7 @@
             type="email"
             class="text-gray-800  rounded-full pl-3 pr-3 pt-2 pb-2 w-3/5 text-xl"
             v-model="email"
-            placeholder="E-mail"
+            placeholder="Doejohn@mail.com"
           />
         </div>
 
@@ -65,6 +65,7 @@
         <p class="bg-black w-24 rounded-lg flex justify-center ">
           <button
             class=" self-center text-white p-3 transition duration-500 ease-in-out  hover:text-pink-500 "
+            v-on:click="signUp"
           >
             SignUp
           </button>
@@ -83,25 +84,31 @@ export default {
     return {
       username: "",
       email: "",
-      password: ""
+      password: "",
+      first_name: "",
+      last_name: "",
+      phone_number: 0
     };
   },
   methods: {
-    async signup() {
+    signUp() {
+      var input = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        firstName: this.first_name,
+        lastName: this.last_name,
+        phoneNumber: this.phone_number
+      };
       this.$apollo
         .mutate({
           mutation: SIGNUP_MUTATION,
           variables: {
-            username: this.username,
-            email: this.email,
-            password: this.password
+            input: input
           }
         })
-        .then(response => {
-          // redirect to login page
-          console.log(response.data.customer);
-          this.$router.replace("/login");
-        });
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
     }
   }
 };

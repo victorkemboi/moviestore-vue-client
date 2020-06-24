@@ -37,9 +37,33 @@ export const SEARCH_QUERY = gql`
 `;
 
 export const SIGNUP_MUTATION = gql`
-  mutation CreateCustomer($input: Object!) {
-    CreateCustomer(input: $input) {
-      customer_id
+  mutation CreateCustomer($input: CustomerInput!) {
+    createCustomer(input: $input) {
+      customer {
+        customerId
+      }
     }
   }
 `;
+
+export const SIGNIN_MUTATION = gql`
+  mutation SignIn($username: String!, $password: String!) {
+    tokenAuth(username: $username, password: $password) {
+      token
+    }
+  }
+`;
+
+`
+customer {
+  customerId
+  firstName
+  lastName
+  phoneNumber
+  email
+  user {
+    username
+    id
+  }
+  accountBalance
+} `;

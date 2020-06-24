@@ -17,7 +17,7 @@
         class=" rounded-full w-20 h-20 bg-white object-contain py-5 self-center align-middle"
       /> -->
       <p
-        class="block py-1 md:py-3 pl-1 align-middle no-underline text-white ml-6 font-bold text-white"
+        class="block py-1 md:py-3 pl-1 align-middle no-underline  ml-6 font-bold text-white"
       >
         MOVIE STORE
       </p>
@@ -59,21 +59,34 @@
           alt="logo"
           class=" rounded-full w-12 h-12 mt-6"
         />
-        <div class=" bg-black w-24 rounded-lg flex justify-center ">
+        <div
+          class=" bg-black w-24 rounded-lg flex justify-center "
+          v-if="!loggedIn"
+        >
           <button
             class=" self-center text-white p-3 transition duration-500 ease-in-out  hover:text-pink-500 "
+            v-on:click="openSignIn"
           >
             Sign In
           </button>
         </div>
-        <router-link to="/register" exact>
+
+        <p
+          class=" text-sm font-semibold mt-2 cursor-pointer transition duration-500 ease-in-out  hover:text-pink-500 hover:text-base"
+          v-on:click="openSignUp"
+          v-if="!loggedIn"
+        >
+          Sign Up
+        </p>
+        <div class="flex flex-col">
           <p
             class=" text-sm font-semibold mt-2 cursor-pointer transition duration-500 ease-in-out  hover:text-pink-500 hover:text-base"
-            v-on:click="closeNav"
+            v-if="loggedIn"
           >
-            Sign Up
+            {{ username }}
           </p>
-        </router-link>
+        </div>
+
         <p
           class="text-xs font-semibold mt-10 cursor-pointer"
           v-on:click="closeNav"
@@ -124,6 +137,22 @@ export default {
     closeNav: function() {
       this.isOpen = false;
       this.isMenuHovered = false;
+    },
+    openSignUp: function() {
+      this.closeNav();
+      this.$router.push("/register");
+    },
+    openSignIn: function() {
+      this.closeNav();
+      this.$router.push("/signin");
+    }
+  },
+  computed: {
+    loggedIn: function() {
+      return this.$store.state.customer.loggedIn;
+    },
+    username: function() {
+      return this.$store.state.customer.user.username;
     }
   }
 };
