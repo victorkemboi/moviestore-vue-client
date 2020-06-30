@@ -168,17 +168,13 @@ export default {
     logOut: function() {
       this.$store.dispatch("user/logOut");
       this.closeNav();
+      this.$forceUpdate();
       this.$router.push("/");
     }
   },
   computed: {
     loggedIn: function() {
-      let savedToken = localStorage.getItem("token");
-      console.log("savedToken", savedToken);
-      if (savedToken != null) {
-        this.$store.dispatch("user/loginWithSavedToken", savedToken);
-      }
-      console.log("store", this.$store.state);
+      this.$store.dispatch("user/loginWithSavedToken");
       return this.$store.state.user.loggedIn;
     },
     username: function() {

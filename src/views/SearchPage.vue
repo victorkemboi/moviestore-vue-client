@@ -10,7 +10,7 @@
       <h1
         class=" w-full mt-16 mb-2 pr-5 text-2xl text-right flex-start font-medium text-myYellow"
       >
-        {{ searchInput }}
+        search: {{ searchInput }}
       </h1>
       <hr class=" w-full   mb-4 text-pink-500" />
     </div>

@@ -67,26 +67,29 @@ export default {
       if (this.isValidInput()) {
         this.loading = true;
         this.$store
-          .dispatch("user/fetchtToken", {
+          .dispatch("user/fetchToken", {
             username: this.username,
-            password: this.password
+            password: this.password,
+            apollo: this.$apollo
           })
           .then(res => {
             if (res) {
-              this.$store.dispatch("user/fetchCustomer").then(res => {
-                if (res) {
-                  this.message = "Login successfull.";
-                  this.showMessage = true;
-                  this.error = false;
-                  setTimeout(() => {
-                    this.loading = false;
-                    this.$router.push("/");
-                  }, 600);
-                }
-              });
+              this.$store
+                .dispatch("user/fetchCustomer", { apollo: this.$apollo })
+                .then(res => {
+                  if (res) {
+                    this.message = "Login successfull.";
+                    this.showMessage = true;
+                    this.error = false;
+                    setTimeout(() => {
+                      this.loading = false;
+                      this.$router.push("/");
+                    }, 600);
+                  }
+                });
             }
           })
-          .error(error => {
+          .catch(error => {
             if (
               error.message == "GraphQL error: Please enter valid credentials"
             ) {

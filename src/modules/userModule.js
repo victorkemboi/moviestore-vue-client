@@ -32,7 +32,7 @@ const UserModule = {
     updateUser: ({ commit }, val) => commit("updateUser", val),
     fetchToken: (context, data) => {
       return new Promise((resolve, reject) => {
-        this.$apollo
+        data.apollo
           .mutate({
             mutation: SIGNIN_MUTATION,
             variables: {
@@ -57,9 +57,9 @@ const UserModule = {
           });
       });
     },
-    fetchCustomer: context => {
+    fetchCustomer: (context, data) => {
       return new Promise((resolve, reject) => {
-        this.$apollo
+        data.apollo
           .mutate({
             mutation: CUSTOMER_QUERY,
             context: {
@@ -97,9 +97,14 @@ const UserModule = {
       context.dispatch("updateUser", user);
       context.dispatch("updateCustomer", customer);
     },
-    loginWithSavedToken: (context, token) => {
-      context.dispatch("updateToken", token);
-      context.dispatch("fetchCustomer").then();
+    loginWithSavedToken: context => {
+      let savedToken = localStorage.getItem("token");
+      console.log("savedToken", savedToken);
+      if (savedToken != null) {
+        context.dispatch("updateToken", savedToken);
+        // eslint-disable-next-line no-unused-vars
+        context.dispatch("fetchCustomer").then(res => {});
+      }
     }
   }
 };
