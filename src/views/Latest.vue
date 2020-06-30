@@ -41,13 +41,13 @@ export default {
       this.loading = true;
       this.$apollo.query({ query: GET_RECENT_MOVIES_QUERY }).then(response => {
         this.loading = false;
-        this.$store.dispatch("updateNewMovies", response.data.movies);
+        this.$store.dispatch("movies/updateNewMovies", response.data.movies);
       });
     }
   },
   computed: {
     newMovies: function() {
-      return this.$store.state.newMovies;
+      return this.$store.state.movies.newMovies;
     }
   }
 };

@@ -1,3 +1,4 @@
+import { SIGNIN_MUTATION, CUSTOMER_QUERY } from "@/graphql/query.js";
 let customer = {
   customerId: "",
   firstName: "",
@@ -5,19 +6,101 @@ let customer = {
   phoneNumber: "",
   email: ""
 };
+let user = {
+  id: "",
+  username: ""
+};
 
-const ModuleA = {
+const UserModule = {
+  namespaced: true,
   state: () => ({
     loggedIn: false,
     token: "",
     customer: customer,
-    user: {
-      id: "",
-      username: ""
+    user: user
+  }),
+  mutations: {
+    login: (state, val) => (state.loggedIn = val),
+    updateToken: (state, val) => (state.token = val),
+    updateCustomer: (state, val) => (state.customer = val),
+    updateUser: (state, val) => (state.user = val)
+  },
+  actions: {
+    login: ({ commit }, val) => commit("login", val),
+    updateToken: ({ commit }, val) => commit("updateToken", val),
+    updateCustomer: ({ commit }, val) => commit("updateCustomer", val),
+    updateUser: ({ commit }, val) => commit("updateUser", val),
+    fetchToken: (context, data) => {
+      return new Promise((resolve, reject) => {
+        this.$apollo
+          .mutate({
+            mutation: SIGNIN_MUTATION,
+            variables: {
+              username: data.username,
+              password: data.password
+            },
+            skip() {
+              !data.username;
+              !data.password;
+            }
+          })
+          .then(response => {
+            //save token info
+            console.log("Token resolved");
+            localStorage.setItem("token", response.data.tokenAuth.token);
+            context.dispatch("updateToken", response.data.tokenAuth.token);
+            resolve(response);
+          })
+          .catch(error => {
+            console.log("Token failed");
+            reject(error);
+          });
+      });
+    },
+    fetchCustomer: context => {
+      return new Promise((resolve, reject) => {
+        this.$apollo
+          .mutate({
+            mutation: CUSTOMER_QUERY,
+            context: {
+              headers: {
+                Authorization: `JWT ${context.state.token}`
+              }
+            }
+          })
+          .then(response => {
+            //fetch customer info
+            console.log("customer resolved");
+            context.dispatch("updateUser", {
+              id: response.data.customer.user.id,
+              username: response.data.customer.user.username
+            });
+            context.dispatch("updateCustomer", {
+              customerId: response.data.customer.customerId,
+              firstName: response.data.customer.firstName,
+              lastName: response.data.customer.lastName,
+              phoneNumber: response.data.customer.phoneNumber,
+              email: response.data.customer.email
+            });
+            context.dispatch("login", true);
+            resolve(response);
+          })
+          .catch(error => {
+            console.log("Customer failed");
+            reject(error);
+          });
+      });
+    },
+    logOut: context => {
+      context.dispatch("updateToken", "");
+      localStorage.setItem("token", null);
+      context.dispatch("updateUser", user);
+      context.dispatch("updateCustomer", customer);
+    },
+    loginWithSavedToken: (context, token) => {
+      context.dispatch("updateToken", token);
+      context.dispatch("fetchCustomer").then();
     }
-  })
+  }
 };
-export default {
-  namespaced: true,
-  ModuleA
-};
+export default UserModule;

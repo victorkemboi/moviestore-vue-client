@@ -76,6 +76,12 @@
         >
           Sign Up
         </p>
+        <p
+          class="text-xs font-semibold mt-10 cursor-pointer hover:text-gray-800"
+          v-on:click="closeNav"
+        >
+          Close
+        </p>
       </div>
       <!-- Signed In -->
 
@@ -98,16 +104,15 @@
         >
           Log Out!
         </p>
+        <p
+          class="text-xs font-semibold mt-10 cursor-pointer hover:text-gray-800"
+          v-on:click="closeNav"
+        >
+          Close
+        </p>
       </div>
 
       <!-- general -->
-
-      <p
-        class="text-xs font-semibold mt-10 cursor-pointer hover:text-gray-800"
-        v-on:click="closeNav"
-      >
-        Close
-      </p>
     </div>
 
     <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out">
@@ -161,29 +166,20 @@ export default {
       this.$router.push("/signin");
     },
     logOut: function() {
-      localStorage.setItem("token", null);
-      console.log("logged out", localStorage.getItem("token"));
+      this.$store.dispatch("user/logOut");
+      this.closeNav();
+      this.$router.push("/");
     }
   },
   computed: {
     loggedIn: function() {
-      let loggedIn = this.$store.state.loggedIn;
-      console.log("store: ", loggedIn);
-
       let savedToken = localStorage.getItem("token");
       console.log("savedToken", savedToken);
       if (savedToken != null) {
-        loggedIn = true;
-        this.$store.dispatch("login", true);
-        this.$store.dispatch("updateToken", savedToken);
-        console.log("saved: not null");
-      } else {
-        loggedIn = false;
-        console.log("saved: ", null);
+        this.$store.dispatch("user/loginWithSavedToken", savedToken);
       }
-      console.log("store2: ", loggedIn);
-
-      return loggedIn;
+      console.log("store", this.$store.state);
+      return this.$store.state.user.loggedIn;
     },
     username: function() {
       return this.$store.state.user.username;

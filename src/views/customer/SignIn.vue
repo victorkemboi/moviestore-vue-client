@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import { SIGNIN_MUTATION, CUSTOMER_QUERY } from "@/graphql/query.js";
 export default {
   name: "SignIn",
   data() {
@@ -67,62 +66,27 @@ export default {
     signIn() {
       if (this.isValidInput()) {
         this.loading = true;
-        this.$apollo
-          .mutate({
-            mutation: SIGNIN_MUTATION,
-            variables: {
-              username: this.username,
-              password: this.password
-            },
-            skip() {
-              !this.username;
-              !this.password;
+        this.$store
+          .dispatch("user/fetchtToken", {
+            username: this.username,
+            password: this.password
+          })
+          .then(res => {
+            if (res) {
+              this.$store.dispatch("user/fetchCustomer").then(res => {
+                if (res) {
+                  this.message = "Login successfull.";
+                  this.showMessage = true;
+                  this.error = false;
+                  setTimeout(() => {
+                    this.loading = false;
+                    this.$router.push("/");
+                  }, 600);
+                }
+              });
             }
           })
-          .then(response => {
-            //save token info
-            localStorage.setItem("token", response.data.tokenAuth.token);
-            this.$apollo
-              .mutate({
-                mutation: CUSTOMER_QUERY,
-                context: {
-                  headers: {
-                    Authorization: `JWT ${localStorage.getItem("token")}`
-                  }
-                }
-              })
-              .then(response2 => {
-                //fetch customer info
-                this.$store.dispatch(
-                  "updateToken",
-                  response.data.tokenAuth.token
-                );
-                this.$store.dispatch("updateUser", {
-                  id: response2.data.customer.user.id,
-                  username: response2.data.customer.user.username
-                });
-                this.$store.dispatch("updateCustomer", {
-                  customerId: response2.data.customer.customerId,
-                  firstName: response2.data.customer.firstName,
-                  lastName: response2.data.customer.lastName,
-                  phoneNumber: response2.data.customer.phoneNumber,
-                  email: response2.data.customer.email
-                });
-                this.$store.dispatch("login", true);
-                this.message = "Login successfull.";
-                this.showMessage = true;
-                this.error = false;
-
-                setTimeout(() => {
-                  this.loading = false;
-                  this.$router.push("/");
-                }, 600);
-              })
-              .catch(error => {
-                console.error(error);
-              });
-          })
-          .catch(error => {
+          .error(error => {
             if (
               error.message == "GraphQL error: Please enter valid credentials"
             ) {
