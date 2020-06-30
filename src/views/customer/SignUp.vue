@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { SIGNUP_MUTATION } from "@/graphql/movieQueries.js";
+import { SIGNUP_MUTATION } from "@/graphql/query.js";
 
 export default {
   name: "SignUp",

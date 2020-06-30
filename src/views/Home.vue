@@ -31,10 +31,17 @@ export default {
   },
   computed: {
     loggedIn: function() {
-      return this.$store.state.customer.loggedIn;
+      let loggedIn = this.$store.state.loggedIn;
+      if (!loggedIn) {
+        let savedToken = localStorage.getItem("token");
+        if (savedToken != null) {
+          loggedIn = true;
+        }
+      }
+      return loggedIn;
     },
     username: function() {
-      return this.$store.state.customer.user.username;
+      return this.$store.state.user.username;
     }
   }
 };

@@ -20,7 +20,7 @@
 
 <script>
 import MovieList from "@/components/MovieList.vue";
-import { GET_RECENT_MOVIES_QUERY } from "@/graphql/movieQueries.js";
+import { GET_RECENT_MOVIES_QUERY } from "@/graphql/query.js";
 
 export default {
   name: "Latest",

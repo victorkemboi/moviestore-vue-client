@@ -54,6 +54,23 @@ export const SIGNIN_MUTATION = gql`
   }
 `;
 
+export const CUSTOMER_QUERY = gql`
+  query {
+    customer {
+      customerId
+      firstName
+      lastName
+      phoneNumber
+      email
+      user {
+        username
+        id
+      }
+      accountBalance
+    }
+  }
+`;
+
 `
 customer {
   customerId

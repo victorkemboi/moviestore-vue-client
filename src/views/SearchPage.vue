@@ -33,7 +33,7 @@
 // @ is an alias to /src
 import MovieList from "@/components/MovieList.vue";
 import SearchBar from "@/components/SearchBar.vue";
-import { SEARCH_QUERY } from "@/graphql/movieQueries.js";
+import { SEARCH_QUERY } from "@/graphql/query.js";
 export default {
   name: "SearchPage",
   components: {

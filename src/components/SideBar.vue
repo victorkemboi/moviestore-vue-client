@@ -51,7 +51,9 @@
         >
       </router-link>
 
+      <!-- Anonymous -->
       <div
+        v-if="!loggedIn"
         class=" w-full flex flex-col bg-white items-center self-end mt-20 flex-1  "
       >
         <img
@@ -59,10 +61,7 @@
           alt="logo"
           class=" rounded-full w-12 h-12 mt-6"
         />
-        <div
-          class=" bg-black w-24 rounded-lg flex justify-center "
-          v-if="!loggedIn"
-        >
+        <div class=" bg-black w-24 rounded-lg flex justify-center ">
           <button
             class=" self-center text-white p-3 transition duration-500 ease-in-out  hover:text-pink-500 "
             v-on:click="openSignIn"
@@ -74,26 +73,41 @@
         <p
           class=" text-sm font-semibold mt-2 cursor-pointer transition duration-500 ease-in-out  hover:text-pink-500 hover:text-base"
           v-on:click="openSignUp"
-          v-if="!loggedIn"
         >
           Sign Up
         </p>
-        <div class="flex flex-col">
-          <p
-            class=" text-sm font-semibold mt-2 cursor-pointer transition duration-500 ease-in-out  hover:text-pink-500 hover:text-base"
-            v-if="loggedIn"
+      </div>
+      <!-- Signed In -->
+
+      <div
+        v-if="loggedIn"
+        class=" w-full flex flex-col bg-white items-center self-end mt-20 flex-1  "
+      >
+        <div class=" bg-black w-24 rounded-lg flex justify-center ">
+          <Span
+            class=" self-center text-pink-500 p-3 transition duration-500 ease-in-out  hover:text-pink-500 "
+            v-on:click="openSignIn"
           >
             {{ username }}
-          </p>
+          </Span>
         </div>
 
         <p
-          class="text-xs font-semibold mt-10 cursor-pointer"
-          v-on:click="closeNav"
+          class="text-xs font-semibold  cursor-pointer mt-4 hover:text-gray-800"
+          v-on:click="logOut"
         >
-          Close
+          Log Out!
         </p>
       </div>
+
+      <!-- general -->
+
+      <p
+        class="text-xs font-semibold mt-10 cursor-pointer hover:text-gray-800"
+        v-on:click="closeNav"
+      >
+        Close
+      </p>
     </div>
 
     <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out">
@@ -145,14 +159,34 @@ export default {
     openSignIn: function() {
       this.closeNav();
       this.$router.push("/signin");
+    },
+    logOut: function() {
+      localStorage.setItem("token", null);
+      console.log("logged out", localStorage.getItem("token"));
     }
   },
   computed: {
     loggedIn: function() {
-      return this.$store.state.customer.loggedIn;
+      let loggedIn = this.$store.state.loggedIn;
+      console.log("store: ", loggedIn);
+
+      let savedToken = localStorage.getItem("token");
+      console.log("savedToken", savedToken);
+      if (savedToken != null) {
+        loggedIn = true;
+        this.$store.dispatch("login", true);
+        this.$store.dispatch("updateToken", savedToken);
+        console.log("saved: not null");
+      } else {
+        loggedIn = false;
+        console.log("saved: ", null);
+      }
+      console.log("store2: ", loggedIn);
+
+      return loggedIn;
     },
     username: function() {
-      return this.$store.state.customer.user.username;
+      return this.$store.state.user.username;
     }
   }
 };

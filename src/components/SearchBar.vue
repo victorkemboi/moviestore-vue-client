@@ -16,7 +16,7 @@
       <form class="flex flex-row w-full" v-on:submit.prevent="onSubmit">
         <img src="@/assets/img/ic_search.svg" class=" w-16 mr-1" />
         <input
-          class="bg-gray-200 w-full mr-5  text-xl text-gray-800 mb-1 flex-end transition duration-500 ease-in-out hover:border-gray-700 border-b-2"
+          class="bg-gray-200 w-full mr-5  text-xl text-gray-800 mb-1 flex-end transition duration-500 ease-in-out "
           v-model="searchText"
           type="text"
           placeholder="Search ..."
