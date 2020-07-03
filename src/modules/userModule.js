@@ -92,18 +92,21 @@ const UserModule = {
       });
     },
     logOut: context => {
+      context.dispatch("login", false);
       context.dispatch("updateToken", "");
       localStorage.setItem("token", null);
       context.dispatch("updateUser", user);
       context.dispatch("updateCustomer", customer);
     },
-    loginWithSavedToken: context => {
+    loginWithSavedToken: (context, apollo) => {
       let savedToken = localStorage.getItem("token");
-      console.log("savedToken", savedToken);
-      if (savedToken != null) {
+      if (savedToken != "null") {
+        console.log("savedToken pass", savedToken);
         context.dispatch("updateToken", savedToken);
         // eslint-disable-next-line no-unused-vars
-        context.dispatch("fetchCustomer").then(res => {});
+        context.dispatch("fetchCustomer", { apollo: apollo }).then(res => {
+          console.log("fetch", res);
+        });
       }
     }
   }

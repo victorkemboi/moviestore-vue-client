@@ -35,6 +35,10 @@ export default {
   },
   created: function() {
     this.fetchNewMovies();
+    window.addEventListener("wheel", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("wheel", this.handleScroll);
   },
   methods: {
     async fetchNewMovies() {
@@ -43,6 +47,18 @@ export default {
         this.loading = false;
         this.$store.dispatch("movies/updateNewMovies", response.data.movies);
       });
+    },
+    handleScroll(event) {
+      const delta = Math.sign(event.deltaY);
+      this.Getpostion();
+      if (delta == -1) {
+        // this.$router.push("/");
+      }
+    },
+    Getpostion() {
+      var vscroll = document.body.scrollTop;
+      console.log("Vscroll: ", vscroll);
+      console.log("Vscroll: ", document.body);
     }
   },
   computed: {

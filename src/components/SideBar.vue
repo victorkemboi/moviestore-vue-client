@@ -3,7 +3,11 @@
     <div
       id="mySidebar"
       class="sidebar flex flex-col text-gray-700 "
-      v-bind:class="{ ' w-1/5': isOpen, 'w-0': !isOpen }"
+      v-bind:class="{
+        ' w-1/5': isOpen && !isSmallScreen,
+        ' w-3/5': isOpen && isSmallScreen,
+        'w-0': !isOpen
+      }"
     >
       <a
         href="javascript:void(0)"
@@ -89,13 +93,17 @@
         v-if="loggedIn"
         class=" w-full flex flex-col bg-white items-center self-end mt-20 flex-1  "
       >
-        <div class=" bg-black w-24 rounded-lg flex justify-center ">
-          <Span
-            class=" self-center text-pink-500 p-3 transition duration-500 ease-in-out  hover:text-pink-500 "
-            v-on:click="openSignIn"
+        <img
+          src="https://source.unsplash.com/random"
+          alt=""
+          class=" w-16 h-16 rounded-full object-cover mt-10"
+        />
+        <div class=" bg-myBlue w-24 rounded-lg flex justify-center  mt-3">
+          <p
+            class=" self-center text-white  pl-2 pr-2 pt-1 pb-1 cursor-pointer :hover:text-pink-500"
           >
             {{ username }}
-          </Span>
+          </p>
         </div>
 
         <p
@@ -146,7 +154,8 @@ export default {
   data() {
     return {
       isOpen: false,
-      isMenuHovered: false
+      isMenuHovered: false,
+      isSmallScreen: false
     };
   },
   methods: {
@@ -170,16 +179,31 @@ export default {
       this.closeNav();
       this.$forceUpdate();
       this.$router.push("/");
+    },
+    // eslint-disable-next-line no-unused-vars
+    changeWidth: function(e) {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 850) {
+        this.isSmallScreen = true;
+      } else {
+        this.isSmallScreen = false;
+      }
     }
   },
   computed: {
     loggedIn: function() {
-      this.$store.dispatch("user/loginWithSavedToken");
+      this.$store.dispatch("user/loginWithSavedToken", this.$apollo);
       return this.$store.state.user.loggedIn;
     },
     username: function() {
-      return this.$store.state.user.username;
+      return this.$store.state.user.user.username;
     }
+  },
+  created() {
+    window.addEventListener("resize", this.changeWidth);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.changeWidth);
   }
 };
 </script>
@@ -227,7 +251,7 @@ export default {
     padding-top: 15px;
   }
   .sidebar a {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 </style>

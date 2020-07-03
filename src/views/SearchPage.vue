@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     parsedSearch: function() {
-      return this.$store.state.parsedSearch;
+      return this.$store.state.movies.parsedSearch;
     },
     isLoading: function() {
       return this.$apolloData.loading;

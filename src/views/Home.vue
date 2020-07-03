@@ -1,5 +1,5 @@
 <template>
-  <div class=" h-screen flex flex-col bg-myBlue landing">
+  <div class=" h-screen flex flex-col bg-myBlue landing ">
     <h1
       class=" text-6xl font-light text-white mt-40 ml-32 flex flex-row items-end"
     >
@@ -16,7 +16,10 @@
 
     <router-link to="/latest" exact>
       <div class="icon">
-        <img src="@/assets/img/ic_arrow.svg" class=" h-5  hover: left-0" />
+        <img
+          src="@/assets/img/ic_arrow.svg"
+          class=" h-5 transition duration-500 ease-in-out  hover: left-0 "
+        />
       </div>
     </router-link>
   </div>
@@ -29,18 +32,39 @@ export default {
   components: {
     SearchBar
   },
+  data() {
+    return {
+      scrolled: false
+    };
+  },
+  methods: {
+    handleScroll(event) {
+      //this.scrolled = window.scrollY > 0;
+      //this.windowHeight = window.innerHeight;
+      // m-page scene_element scene_element--fadeinup
+      const delta = Math.sign(event.deltaY);
+      if (delta == 1) {
+        this.$router.push("/latest");
+      }
+    }
+  },
   computed: {
     loggedIn: function() {
       return this.$store.state.user.loggedIn;
     },
     username: function() {
-      //return this.$store.state.user.user.username;
       return (
         this.$store.state.user.customer.firstName +
         " " +
         this.$store.state.user.customer.lastName
       );
     }
+  },
+  created() {
+    window.addEventListener("wheel", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("wheel", this.handleScroll);
   }
 };
 </script>

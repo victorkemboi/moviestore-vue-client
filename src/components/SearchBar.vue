@@ -10,7 +10,7 @@
       class=" bg-gray-200 rounded-full pl-5 pr-2  hover:shadow-lg flex"
       v-bind:class="{
         'w-3/4': !isHome,
-        'border-4 border-red-600': inputError
+        'border-2 border-red-600': inputError
       }"
     >
       <form class="flex flex-row w-full" v-on:submit.prevent="onSubmit">
@@ -59,7 +59,7 @@ export default {
         if (this.searchText.trim() != "") {
           this.inputError = false;
           if (this.isHome) {
-            this.$store.dispatch("parseSearch", this.searchText);
+            this.$store.dispatch("movies/parseSearch", this.searchText);
             this.$router.push("/search");
           } else {
             this.emitSearchText();
