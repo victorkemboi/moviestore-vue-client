@@ -85,4 +85,28 @@ export default {
 .scene_element--fadeinright {
   animation-name: fadeInRight;
 }
+.scene_element--fadeinleft {
+  animation-name: fadeInLeft;
+}
+
+.slide-left {
+  position: absolute;
+  left: -100px;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 0.4s;
+  animation: slide 0.5s forwards;
+  animation-delay: 0.4s;
+}
+
+@-webkit-keyframes slide {
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes slide {
+  100% {
+    left: 0;
+  }
+}
 </style>

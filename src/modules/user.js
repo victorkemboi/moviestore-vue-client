@@ -70,7 +70,6 @@ const UserModule = {
           })
           .then(response => {
             //fetch customer info
-            console.log("customer resolved");
             context.dispatch("updateUser", {
               id: response.data.customer.user.id,
               username: response.data.customer.user.username
@@ -86,7 +85,6 @@ const UserModule = {
             resolve(response);
           })
           .catch(error => {
-            console.log("Customer failed");
             reject(error);
           });
       });
@@ -101,12 +99,9 @@ const UserModule = {
     loginWithSavedToken: (context, apollo) => {
       let savedToken = localStorage.getItem("token");
       if (savedToken != "null") {
-        console.log("savedToken pass", savedToken);
         context.dispatch("updateToken", savedToken);
         // eslint-disable-next-line no-unused-vars
-        context.dispatch("fetchCustomer", { apollo: apollo }).then(res => {
-          console.log("fetch", res);
-        });
+        context.dispatch("fetchCustomer", { apollo: apollo }).then(res => {});
       }
     }
   }

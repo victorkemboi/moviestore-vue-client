@@ -1,8 +1,8 @@
 <template>
-  <div class=" fixed flex shadow-xl">
+  <div class=" fixed flex shadow-xl ">
     <div
       id="mySidebar"
-      class="sidebar flex flex-col text-gray-700 "
+      class="sidebar opacity-75 flex flex-col text-gray-700 "
       v-bind:class="{
         ' w-1/5': isOpen && !isSmallScreen,
         ' w-3/5': isOpen && isSmallScreen,
@@ -123,26 +123,31 @@
       <!-- general -->
     </div>
 
-    <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out">
+    <div id="main" v-if="!isOpen" class="transition duration-500 ease-in-out ">
       <button
-        class="py-3 px-3 rounded-lg text-xl bg-black cursor-pointer transition duration-500 ease-in-out"
+        class="flex flex-row py-3 px-3 rounded-lg text-xl bg-black cursor-pointer"
         @click="openNav"
-        v-bind:class="{
-          'text-myYellow': isMenuHovered,
-          'text-white': !isMenuHovered
-        }"
         @mouseover="isMenuHovered = true"
         @mouseleave="isMenuHovered = false"
       >
-        <span
+        <p
           class="transition duration-500 ease-in-out"
           v-bind:class="{
             'text-pink-500': isMenuHovered,
             'text-white': !isMenuHovered
           }"
-          >&#9776;</span
         >
-        Movie Store
+          &#9776;
+        </p>
+        <p
+          class=" ml-1 transition duration-500 ease-in-out"
+          v-bind:class="{
+            'text-myYellow': isMenuHovered,
+            'text-white': !isMenuHovered
+          }"
+        >
+          Movie Store
+        </p>
       </button>
     </div>
   </div>

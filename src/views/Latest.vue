@@ -50,15 +50,17 @@ export default {
     },
     handleScroll(event) {
       const delta = Math.sign(event.deltaY);
-      this.Getpostion();
       if (delta == -1) {
-        // this.$router.push("/");
+        //if scroll up(-Y), check page position
+        this.Getpostion();
       }
     },
     Getpostion() {
-      var vscroll = document.body.scrollTop;
-      console.log("Vscroll: ", vscroll);
-      console.log("Vscroll: ", document.body);
+      let bound = document.body.getBoundingClientRect().top;
+      if (bound == 0) {
+        //if top page, go to home
+        this.$router.push("/");
+      }
     }
   },
   computed: {

@@ -1,12 +1,12 @@
 <template>
   <div class=" h-screen flex flex-col bg-myBlue landing ">
     <h1
-      class=" text-6xl font-light text-white mt-40 ml-32 flex flex-row items-end"
+      class="text-6xl font-light text-white mt-40 ml-32 flex flex-row items-end  "
     >
       Welcome<span v-if="loggedIn">,</span>
       <p
         v-if="loggedIn"
-        class=" text-3xl pb-3 hover:underline text-pink-400 hover:text-myYellow ml-4"
+        class="transition duration-500 ease-in-out text-3xl pb-3 hover:underline text-pink-400 hover:text-myYellow ml-4"
       >
         {{ username }}
       </p>
