@@ -1,18 +1,44 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, createLocalVue, RouterLinkStub } from "@vue/test-utils";
 import Home from "@/views/Home";
+import Vuex from "vuex";
 
-describe("Message", () => {
-  it("renders when logged in", () => {
-    const loggedIn = true;
-    const wrapper = shallowMount(Home, {
-      context: { computed: { loggedIn } }
+const localVue = createLocalVue();
+localVue.use(Vuex);
+
+const store = new Vuex.Store({
+  modules: {
+    user: {
+      namespaced: true,
+      state: () => ({
+        loggedIn: false,
+        token: "",
+        user: {
+          id: "1",
+          username: ""
+        },
+        customer: {
+          customerId: "",
+          firstName: "Vicki",
+          lastName: "Mes",
+          phoneNumber: "",
+          email: ""
+        }
+      })
+    }
+  }
+});
+
+describe("Home", () => {
+  it("Returns concatenated first and lastname of customer", () => {
+    const wrapper = mount(Home, {
+      store,
+      localVue,
+      stubs: {
+        RouterLink: RouterLinkStub
+      }
     });
-    expect(wrapper.text()).toBe(loggedIn);
-  });
-
-  it("renders if not loggedIn", () => {
-    const loggedIn = false;
-    const wrapper = shallowMount(Home, { context: {} });
-    expect(wrapper.text()).toBe(loggedIn);
+    //expect(wrapper.text()).toBe("Vicki Mes");
+    //expect(wrapper.find(".username").text()).toBe("Vicki Mes");
+    expect(wrapper.vm.username).toBe("Vicki Mes");
   });
 });
