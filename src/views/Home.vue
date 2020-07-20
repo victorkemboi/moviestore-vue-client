@@ -39,9 +39,6 @@ export default {
   },
   methods: {
     handleScroll(event) {
-      //this.scrolled = window.scrollY > 0;
-      //this.windowHeight = window.innerHeight;
-      // m-page scene_element scene_element--fadeinup
       const delta = Math.sign(event.deltaY);
       if (delta == 1) {
         this.$router.push("/latest");

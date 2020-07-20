@@ -1,4 +1,4 @@
-import { mount, createLocalVue, RouterLinkStub } from "@vue/test-utils";
+import { shallowMount, createLocalVue, RouterLinkStub } from "@vue/test-utils";
 import Home from "@/views/Home";
 import Vuex from "vuex";
 
@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     user: {
       namespaced: true,
       state: () => ({
-        loggedIn: false,
+        loggedIn: true,
         token: "",
         user: {
           id: "1",
@@ -29,16 +29,20 @@ const store = new Vuex.Store({
 });
 
 describe("Home", () => {
-  it("Returns concatenated first and lastname of customer", () => {
-    const wrapper = mount(Home, {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallowMount(Home, {
       store,
       localVue,
       stubs: {
         RouterLink: RouterLinkStub
       }
     });
-    //expect(wrapper.text()).toBe("Vicki Mes");
-    //expect(wrapper.find(".username").text()).toBe("Vicki Mes");
+  });
+  it("Returns concatenated first and lastname of customer", () => {
     expect(wrapper.vm.username).toBe("Vicki Mes");
+  });
+  it("Returns if user loggedIn", () => {
+    expect(wrapper.vm.loggedIn).toBe(true);
   });
 });
