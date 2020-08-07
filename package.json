@@ -17,6 +17,7 @@
     "apollo-link-http": "^1.5.17",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
     "eslint-plugin-jest": "^23.18.0",
     "graphql": "^15.1.0",
     "graphql-tag": "^2.10.3",
